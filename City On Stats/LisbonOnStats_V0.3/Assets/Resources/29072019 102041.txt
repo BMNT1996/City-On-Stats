@@ -1,0 +1,8 @@
+Visualization use:
+Simple: 146 seconds
+Texture: 1 seconds
+Bar: 0 seconds
+Color Cubes: 0 seconds
+Height Cubes: 0 seconds
+Fog: 0 seconds
+Rain: 1 seconds
