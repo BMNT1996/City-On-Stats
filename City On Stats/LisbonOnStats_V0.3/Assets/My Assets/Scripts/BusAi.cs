@@ -162,7 +162,7 @@ public class BusAi : MonoBehaviour
         }
 
         // left and right sensor angled, trying to keep bus on road 
-        else
+        /*else
         {
             if (Physics.Raycast(sensorStartPos, Quaternion.AngleAxis(frontSensorAngle, transform.right) * Quaternion.AngleAxis(-5, transform.up) * transform.forward, out hit, sensorLength + 2))
             {
@@ -178,12 +178,12 @@ public class BusAi : MonoBehaviour
                     if (nameleft.Contains("Road") && !nameright.Contains("Road"))
                     {
                         avoiding = true;
-                        avoidMultiplier -= 0.5f;
+                        avoidMultiplier -= 1f;
                     }
                     else if (nameright.Contains("Road") && !nameleft.Contains("Road"))
                     {
                         avoiding = true;
-                        avoidMultiplier += 0.5f;
+                        avoidMultiplier += 1f;
                     }
                 }
 
@@ -192,7 +192,7 @@ public class BusAi : MonoBehaviour
 
 
 
-        }
+        }*/
 
         //front center sensor
         if (avoidMultiplier == 0)

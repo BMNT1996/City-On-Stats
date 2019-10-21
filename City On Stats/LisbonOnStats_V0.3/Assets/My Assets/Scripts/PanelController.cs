@@ -49,16 +49,16 @@ public class PanelController : MonoBehaviour
             map();
         }
 
-        if (Input.GetKeyDown("t") || Input.GetKeyDown("JoystickButton2"))
+        if (Input.GetKeyDown("t") || Input.GetKeyDown(KeyCode.JoystickButton2))
         {
-            if(!si.isOnAiBusMode())
+            if (!si.isOnAiBusMode())
                 teleport();
             else
                 WarningPanel.SetActive(true);
-                WarningPanel.GetComponent<WarningScript>().setTimer(5);
+            WarningPanel.GetComponent<WarningScript>().setTimer(5);
         }
 
-        if ((Input.GetKeyDown("b") || Input.GetKeyDown("JoystickButton1")) && !si.isOnAiBusMode())
+        if ((Input.GetKeyDown("b") || Input.GetKeyDown(KeyCode.JoystickButton1)) && !si.isOnAiBusMode())
         {
             bus();
         }
@@ -68,19 +68,25 @@ public class PanelController : MonoBehaviour
             gases();
         }
 
-        if (Input.GetKeyDown(KeyCode.Escape) || Input.GetKeyDown("JoystickButton7"))
+        if (Input.GetKeyDown(KeyCode.Escape) || Input.GetKeyDown(KeyCode.JoystickButton7))
         {
             escape();
         }
 
-		if (Input.GetKeyDown("r") && !si.isOnAiBusMode())
+        if (Input.GetKeyDown("r") && !si.isOnAiBusMode())
         {
-			GameObject gm = GameObject.FindGameObjectWithTag("Player");
-            gm.transform.position=new Vector3 (gm.transform.position.x,5,gm.transform.position.z);
-			gm.GetComponent<Rigidbody>().velocity = Vector3.zero;
-			gm.GetComponent<Rigidbody>().angularVelocity = Vector3.zero;
-			gm.transform.eulerAngles=new Vector3 (0,0,0);
-		}
+            GameObject gm = GameObject.FindGameObjectWithTag("Player");
+            gm.transform.position = new Vector3(gm.transform.position.x, 5, gm.transform.position.z);
+            gm.GetComponent<Rigidbody>().velocity = Vector3.zero;
+            gm.GetComponent<Rigidbody>().angularVelocity = Vector3.zero;
+            gm.transform.eulerAngles = new Vector3(0, 0, 0);
+        }
+
+        if (Input.GetKeyDown(KeyCode.JoystickButton6))
+            helpSelection();
+
+        if (Input.GetKeyDown(KeyCode.JoystickButton5))
+            challenge();
     }
 
     public void gases()

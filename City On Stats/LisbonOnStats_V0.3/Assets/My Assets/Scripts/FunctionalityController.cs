@@ -184,6 +184,8 @@ public class FunctionalityController : MonoBehaviour
 
             case 30:
                 value = 0;
+                nextButton.GetComponentInChildren<Text>().text = "Next";
+                PanelHandler.GetComponent<PanelController>().closeAllPanels();
                 gameObject.SetActive(false);
                 break;
 

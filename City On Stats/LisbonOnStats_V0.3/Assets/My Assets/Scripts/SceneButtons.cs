@@ -19,7 +19,7 @@ public class SceneButtons : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown("JoystickButton6"))
+        /*if (Input.GetKeyDown("JoystickButton6"))
         {
             helpClicked();
         }
@@ -27,7 +27,7 @@ public class SceneButtons : MonoBehaviour
         if (Input.GetKeyDown("JoystickButton5"))
         {
             challengeClicked();
-        }
+        }*/
     }
 
     public void exitClicked()

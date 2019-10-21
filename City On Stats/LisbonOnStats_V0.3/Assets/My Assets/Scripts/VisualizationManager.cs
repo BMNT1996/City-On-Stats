@@ -49,7 +49,7 @@ public class VisualizationManager : MonoBehaviour
         StaticInfos si = GameObject.FindGameObjectWithTag("StaticInfos").GetComponent<StaticInfos>();
         if (!si.isOnAiBusMode())
         {
-            if (Input.GetKeyDown("v") || vCalled || Input.GetKeyDown("JoystickButton0"))
+            if (Input.GetKeyDown("v") || vCalled || Input.GetKeyDown(KeyCode.JoystickButton0))
             {
                 vCalled = false;
                 switch (active)
@@ -177,7 +177,7 @@ public class VisualizationManager : MonoBehaviour
 
         else
         {
-            if (Input.GetKeyDown("v") || vCalled || Input.GetKeyDown("JoystickButton0"))
+            if (Input.GetKeyDown("v") || vCalled || Input.GetKeyDown(KeyCode.JoystickButton0))
             {
                 vCalled = false;
                 GameObject activeAutoBus = null;

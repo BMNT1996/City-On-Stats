@@ -23,6 +23,7 @@ public class CountScript : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        run = true;
         simple=0;
         texture=0;
         bar=0;
@@ -35,10 +36,8 @@ public class CountScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-            if (Input.GetKeyDown("h"))
-            {
-                run = true;
-            }
+       //if (Input.GetKeyDown("h"))
+       //run = true;
 
         if (run)
         {
@@ -50,14 +49,14 @@ public class CountScript : MonoBehaviour
 
             if (nextCheck < Time.time)
             {
-                checkVisualization();
                 nextCheck += 0.2;
+                checkVisualization();
             }
 
             if (nextSave < Time.time)
             {
-                save();
                 nextSave += 5;
+                save();
             }
         }
     }

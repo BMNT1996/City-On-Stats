@@ -26,7 +26,7 @@ public class ViewChanger : MonoBehaviour
 
     void Update()
     {
-        if ((Input.GetKeyDown("c") || cCalled) && !si.isOnAiBusMode())
+        if ((Input.GetKeyDown("c") || cCalled || Input.GetKeyDown(KeyCode.JoystickButton3)) && !si.isOnAiBusMode())
         {
             cCalled = false;
             charactersIndex++;
@@ -102,7 +102,7 @@ public class ViewChanger : MonoBehaviour
             currentCharacter = characters[charactersIndex];
         }
 
-        if ((Input.GetKeyDown("c") || cCalled || Input.GetKeyDown("JoystickButton3")) && si.isOnAiBusMode())
+        if ((Input.GetKeyDown("c") || cCalled) && si.isOnAiBusMode())
         {
             WarningPanel.SetActive(true);
             WarningPanel.GetComponent<WarningScript>().setTimer(5);
