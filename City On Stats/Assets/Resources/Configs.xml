@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<CONFIGURATIONS>
+
+  <color min="0,1,0" ave="1,1,0" max="1,0,0"/>
+
+  <gas name="CO" min="0" ave="5" max="15"/>
+
+</CONFIGURATIONS>
+ 

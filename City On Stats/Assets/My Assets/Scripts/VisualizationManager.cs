@@ -8,11 +8,13 @@ using UnityEngine.UI;
 public class VisualizationManager : MonoBehaviour
 {
     public Text text;
+	public Text mode;
     public Material material;
     public GameObject cylinder;
     public GameObject Cubes;
     public GameObject Fog;
     public GameObject Rain;
+    public InteractiveTutorial Tutorial;
 
     public GameObject AutoBusParent;
 
@@ -47,7 +49,7 @@ public class VisualizationManager : MonoBehaviour
         StaticInfos si = GameObject.FindGameObjectWithTag("StaticInfos").GetComponent<StaticInfos>();
         if (!si.isOnAiBusMode())
         {
-            if (Input.GetKeyDown("v") || vCalled)
+            if (Input.GetKeyDown("v") || vCalled || Input.GetKeyDown(KeyCode.JoystickButton0))
             {
                 vCalled = false;
                 switch (active)
@@ -84,35 +86,42 @@ public class VisualizationManager : MonoBehaviour
                 switch (active)
                 {
                     case 0:
+						mode.text="Visualization:\nSIMPLE";
                         break;
 
                     case 1:
+						mode.text="Visualization:\nTEXTURE";
                         nextTime = Time.time;
                         material.color = new Color(1f, 1f, 0f);
                         break;
 
                     case 2:
+						mode.text="Visualization:\nBAR";
                         cylinder.SetActive(true);
                         break;
 
                     case 3:
+						mode.text="Visualization:\nCOLOR CUBE";
                         ((GameObject)listOfVisualization[active]).SetActive(true);
                         Cubes.GetComponent<CubeView>().activateColorMode();
                         ((GameObject)listOfVisualization[active]).GetComponent<CubeView>().resetAndSetMode(true);
                         break;
 
                     case 4:
+						mode.text="Visualization:\nHEIGHT CUBE";
                         Cubes.GetComponent<CubeView>().activateHeightMode();
                         ((GameObject)listOfVisualization[active]).GetComponent<CubeView>().resetAndSetMode(false);
                         break;
 
                     case 5:
+						mode.text="Visualization:\nFOG";
                         Fog.GetComponent<FogController>().updateTime();
                         ((GameObject)listOfVisualization[active]).SetActive(true);
                         RenderSettings.fogDensity = 0f;
                         break;
 
                     case 6:
+						mode.text="Visualization:\nRAIN";
                         ((GameObject)listOfVisualization[active]).SetActive(true);
                         Rain.GetComponent<RainScript>().RainIntensity = 1;
                         break;
@@ -124,7 +133,7 @@ public class VisualizationManager : MonoBehaviour
                 {
                     if (!si.getActualGas().Equals("") && !si.getActualGas().Equals(null))
                     {
-                        text.text = si.getActualGas() + "\n" + DataStorageObject.getGasValue(si.getActualGas(), new Vector2(((int)Camera.current.transform.position.z), ((int)Camera.current.transform.position.x)));
+                        text.text = si.getActualGas() + "\n" + DataStorageObject.getGasValue(si.getActualGas(), new Vector2(((int)Camera.current.transform.position.z), ((int)Camera.current.transform.position.x))).ToString("F3");
                         switch (active)
                         {
                             case 1:
@@ -168,7 +177,7 @@ public class VisualizationManager : MonoBehaviour
 
         else
         {
-            if (Input.GetKeyDown("v") || vCalled)
+            if (Input.GetKeyDown("v") || vCalled || Input.GetKeyDown(KeyCode.JoystickButton0))
             {
                 vCalled = false;
                 GameObject activeAutoBus = null;
@@ -208,9 +217,11 @@ public class VisualizationManager : MonoBehaviour
                 switch (activeAuto)
                 {
                     case 0:
+                        mode.text = "Visualization:\nTEXTURE";
                         break;
 
                     case 1:
+                        mode.text = "Visualization:\nBAR";
                         if (activeAutoBus != null)
                         {
                             activeAutoBus.transform.Find("Cylinder").gameObject.SetActive(true);
@@ -218,6 +229,7 @@ public class VisualizationManager : MonoBehaviour
                         break;
 
                     case 2:
+                        mode.text = "Visualization:\nFOG";
                         Fog.GetComponent<FogController>().updateTime();
                         Fog.SetActive(true);
                         RenderSettings.fogDensity = 0f;
@@ -269,10 +281,17 @@ public class VisualizationManager : MonoBehaviour
             t.Find("Cylinder").gameObject.SetActive(false);
         }
         text.text = "No values\n---";
+		StaticInfos si = GameObject.FindGameObjectWithTag("StaticInfos").GetComponent<StaticInfos>();
+        //The bus mode state will change after this fuction
+        if (si.isOnAiBusMode())
+            mode.text = "Visualization:\nSIMPLE";
+        else
+            mode.text = "Visualization:\nTEXTURE";
     }
 
     public void callForVisualization()
     {
         vCalled = true;
+        Tutorial.visualizationUsed();
     }
 }

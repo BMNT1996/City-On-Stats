@@ -7,6 +7,7 @@ public class SceneButtons : MonoBehaviour
     public GameObject panelController;
     public VisualizationManager vm;
     public ViewChanger vc;
+    public GameObject WarningPanel;
     StaticInfos si;
 
     // Start is called before the first frame update
@@ -18,7 +19,15 @@ public class SceneButtons : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        /*if (Input.GetKeyDown("JoystickButton6"))
+        {
+            helpClicked();
+        }
 
+        if (Input.GetKeyDown("JoystickButton5"))
+        {
+            challengeClicked();
+        }*/
     }
 
     public void exitClicked()
@@ -30,12 +39,22 @@ public class SceneButtons : MonoBehaviour
     {
         if (!si.isOnAiBusMode())
             panelController.GetComponent<PanelController>().teleport();
+        else
+        {
+            WarningPanel.SetActive(true);
+            WarningPanel.GetComponent<WarningScript>().setTimer(5);
+        }
     }
 
     public void busClicked()
     {
         if (!si.isOnAiBusMode())
             panelController.GetComponent<PanelController>().bus();
+        else
+        {
+            panelController.GetComponent<PanelController>().escape();
+            panelController.GetComponent<PanelController>().bus();
+        }
     }
 
     public void mapClicked()
@@ -47,6 +66,26 @@ public class SceneButtons : MonoBehaviour
     {
         panelController.GetComponent<PanelController>().gases();
     }
+	
+	public void helpClicked()
+    {
+        panelController.GetComponent<PanelController>().help();
+    }
+
+    public void helpSelectionClicked()
+    {
+        panelController.GetComponent<PanelController>().helpSelection();
+    }
+
+    public void tutorialClicked()
+    {
+        panelController.GetComponent<PanelController>().tutorial();
+    }
+	
+	public void challengeClicked()
+    {
+        panelController.GetComponent<PanelController>().challenge();
+    }
 
     public void visualizationClicked()
     {
@@ -56,15 +95,5 @@ public class SceneButtons : MonoBehaviour
     public void camaraClicked()
     {
         vc.cCall();
-    }
-
-    public void helpClicked()
-    {
-
-    }
-
-    public void challengesClicked()
-    {
-
     }
 }

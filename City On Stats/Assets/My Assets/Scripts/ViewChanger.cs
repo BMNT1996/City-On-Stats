@@ -10,6 +10,7 @@ public class ViewChanger : MonoBehaviour
     StaticInfos si;
 
     public GameObject[] characters;
+    public GameObject WarningPanel;
     GameObject currentCharacter;
     int charactersIndex;
     bool cCalled = false;
@@ -25,7 +26,7 @@ public class ViewChanger : MonoBehaviour
 
     void Update()
     {
-        if ((Input.GetKeyDown("c") || cCalled) && !si.isOnAiBusMode())
+        if ((Input.GetKeyDown("c") || cCalled || Input.GetKeyDown(KeyCode.JoystickButton3)) && !si.isOnAiBusMode())
         {
             cCalled = false;
             charactersIndex++;
@@ -99,25 +100,13 @@ public class ViewChanger : MonoBehaviour
             }
 
             currentCharacter = characters[charactersIndex];
-
-            //enable player 2 controller
         }
-        // if(Input.GetButtonDown("Fire2")){
-        //   //left alt key or B
-        //   print("pressed Fire2");
-        // }
-        // if(Input.GetButtonDown("Fire3")){
-        //   //left alt shift or X 
-        //   print("pressed Fire3");
-        // }
-        // if(Input.GetButtonDown("Jump")){
-        //   //left alt shift or Y
-        //   print("pressed Jump");
-        // }
-        // if(Input.GetButtonDown("Submit")){
-        //   //Enter or A
-        //   print("pressed Submit");
-        // }
+
+        if ((Input.GetKeyDown("c") || cCalled) && si.isOnAiBusMode())
+        {
+            WarningPanel.SetActive(true);
+            WarningPanel.GetComponent<WarningScript>().setTimer(5);
+        }
     }
 
     public void cCall()

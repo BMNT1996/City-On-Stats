@@ -11,6 +11,7 @@ public class FunctionalityController : MonoBehaviour
     public GameObject image;
     public Button nextButton;
     public Texture[] images;
+    public GameObject PanelHandler;
 
     // Start is called before the first frame update
     void Start()
@@ -56,87 +57,135 @@ public class FunctionalityController : MonoBehaviour
 
             case 5:
                 image.GetComponent<RawImage>().texture = images[1];
-                text.text = "Simple - Just with the numeric value on the coner";
+                text.text = "Simple";
                 break;
 
             case 6:
-                image.GetComponent<RawImage>().texture = images[2];
-                text.text = "Color Changing - Your bus color will change";
+                image.GetComponent<RawImage>().texture = images[1];
+                text.text = "You only have the value at the botton right";
                 break;
 
             case 7:
-                image.GetComponent<RawImage>().texture = images[3];
-                text.text = "Bar - You get a bar in top of the bus";
+                image.GetComponent<RawImage>().texture = images[2];
+                text.text = "Texture";
                 break;
 
             case 8:
-                image.GetComponent<RawImage>().texture = images[4];
-                text.text = "Color Tiles - 81 tiles with colors just for you";
+                image.GetComponent<RawImage>().texture = images[2];
+                text.text = "The color of the bus will change with the value";
                 break;
 
             case 9:
-                image.GetComponent<RawImage>().texture = images[5];
-                text.text = "Height Tiles - Same tiles that can also grow up";
+                image.GetComponent<RawImage>().texture = images[3];
+                text.text = "BAR";
                 break;
 
             case 10:
-                image.GetComponent<RawImage>().texture = images[6];
-                text.text = "Fog - Sometimes values are so high that nobody can see nothing";
+                image.GetComponent<RawImage>().texture = images[3];
+                text.text = "A bar will grow on top of your bus depending of the value";
                 break;
 
             case 11:
-                image.GetComponent<RawImage>().texture = images[7];
-                text.text = "Rain - Listen the rain, it can help you";
+                image.GetComponent<RawImage>().texture = images[4];
+                text.text = "Color Cubes";
                 break;
 
             case 12:
+                image.GetComponent<RawImage>().texture = images[4];
+                text.text = "Cubes like tiles will appear under the bus and show the value";
+                break;
+
+            case 13:
+                image.GetComponent<RawImage>().texture = images[5];
+                text.text = "Height Cubes";
+                break;
+
+            case 14:
+                image.GetComponent<RawImage>().texture = images[5];
+                text.text = "Like color cubes, but these ones grows with the value";
+                break;
+
+            case 15:
+                image.GetComponent<RawImage>().texture = images[6];
+                text.text = "Fog";
+                break;
+
+            case 16:
+                image.GetComponent<RawImage>().texture = images[6];
+                text.text = "More fog means higher values";
+                break;
+
+            case 17:
+                image.GetComponent<RawImage>().texture = images[7];
+                text.text = "Rain";
+                break;
+
+            case 18:
+                image.GetComponent<RawImage>().texture = images[7];
+                text.text = "Listen the rain, it depends of the values";
+                break;
+
+            case 19:
+                image.GetComponent<RawImage>().texture = images[0];
+                text.text = "These modes will help you to see the polution";
+                break;
+
+            case 20:
                 image.GetComponent<RawImage>().texture = images[0];
                 text.text = "Second functionality is a time saver";
                 break;
 
-            case 13:
+            case 21:
                 image.GetComponent<RawImage>().texture = images[8];
                 text.text = "You can teleport yourself to any destination you want";
                 break;
 
-            case 14:
+            case 22:
                 image.GetComponent<RawImage>().texture = images[0];
                 text.text = "The third functionality is like a time travel";
                 break;
 
-            case 15:
+            case 23:
                 image.GetComponent<RawImage>().texture = images[9];
-                text.text = "RIGHT CLICK and you can see the evolution of the data";
+                text.text = "RIGHT CLICK and you can see the evolution by hour";
                 break;
 
-            case 16:
+            case 24:
                 image.GetComponent<RawImage>().texture = images[0];
                 text.text = "The fourth functionality is like a spa";
                 break;
 
-            case 17:
+            case 25:
                 image.GetComponent<RawImage>().texture = images[10];
-                text.text = "You can \"take\" a bus and let him guide you throw his route";
+                text.text = "You can \"take\" a bus and let him guide you throw its route";
                 break;
 
-            case 18:
+            case 26:
+                image.GetComponent<RawImage>().texture = images[10];
+                text.text = "You can \"ESC\" to exit from the bus you \"take\"";
+                break;
+
+            case 27:
                 image.GetComponent<RawImage>().texture = images[0];
                 text.text = "Finaly you are ready, and remember";
                 break;
 
-            case 19:
+            case 28:
                 image.GetComponent<RawImage>().texture = images[0];
                 text.text = "DON'T BE AFRAID TO EXPLORE";
                 nextButton.GetComponentInChildren<Text>().text = "Next";
                 break;
 
-            case 20:
+            case 29:
                 image.GetComponent<RawImage>().texture = images[11];
                 text.text = "Have Fun";
                 nextButton.GetComponentInChildren<Text>().text = "Exit";
                 break;
 
-            case 21:
+            case 30:
+                value = 0;
+                nextButton.GetComponentInChildren<Text>().text = "Next";
+                PanelHandler.GetComponent<PanelController>().closeAllPanels();
                 gameObject.SetActive(false);
                 break;
 
@@ -160,6 +209,7 @@ public class FunctionalityController : MonoBehaviour
 
     public void buttonExit()
     {
-        gameObject.SetActive(false);
+        value = 0;
+        PanelHandler.GetComponent<PanelController>().closeAllPanels();
     }
 }

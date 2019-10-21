@@ -202,7 +202,7 @@ public class BusGenerator : MonoBehaviour
                         if (i < nodesFromXML.Count - 1)
                         {
                             vector = ((Vector3)nodesFromXML[i + 1]) - ((Vector3)nodesFromXML[i]);
-                            double scale = (vector.magnitude / 25);
+                            double scale = (vector.magnitude / 50); //Space of 25 meters
                             comolativeDist += scale;
                             foreach (string key in ((Dictionary<string, double>)gasesFromXML[i]).Keys)
                             {

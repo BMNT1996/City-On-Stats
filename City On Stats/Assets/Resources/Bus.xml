@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<BUSES>
+
+ <color min="0,1,0" ave="1,1,0" max="1,0,0"/> 
+  
+ <colorcode name="CO" min="0" ave="5" max="15"/>
+ 
+  <bus name="Bus 1">
+  <path>
+  
+  <node lat="39.869673" lon="-4.032583">
+    <gas name="CO" value="7"/>
+   </node>
+   
+   <node lat="39.870741" lon="-4.031913">
+     <gas name="CO" value="5"/>
+   </node>
+   
+   <node lat="39.870520" lon="-4.031403">
+    <gas name="CO" value="5"/>
+   </node>
+   
+   <node lat="39.869467" lon="-4.032092">
+    <gas name="CO" value="7"/>
+   </node>
+  
+  </path>
+  </bus>
+  
+  <bus name="Bus 2">
+  <path>
+  
+  <node lat="39.867438" lon="-4.029234">
+    <gas name="CO" value="10"/>
+   </node>
+   
+   <node lat="39.868082" lon="-4.029397">
+    <gas name="CO" value="13"/>
+   </node>
+   
+   <node lat="39.868255" lon="-4.029172">
+    <gas name="CO" value="14"/>
+   </node>
+   
+   <node lat="39.868527" lon="-4.029408">
+    <gas name="CO" value="15"/>
+   </node>
+   
+   <node lat="39.868387" lon="-4.029740">
+    <gas name="CO" value="14"/>
+   </node>
+   
+   <node lat="39.868099" lon="-4.029601">
+    <gas name="CO" value="13"/>
+   </node>
+   
+   <node lat="39.867343" lon="-4.029348">
+    <gas name="CO" value="10"/>
+   </node>
+   
+  </path>
+  </bus>
+  
+  <bus name="Bus 3">
+  <path>
+  
+  <node lat="39.870818" lon="-4.027264">
+    <gas name="CO" value="0"/>
+   </node>
+   
+   <node lat="39.868472" lon="-4.025618">
+    <gas name="CO" value="1"/>
+   </node>
+   
+   <node lat="39.868472" lon="-4.025618">
+    <gas name="CO" value="3"/>
+   </node>
+   
+   <node lat="39.868200" lon="-4.025720">
+    <gas name="CO" value="3"/>
+   </node>
+  
+   <node lat="39.868464" lon="-4.025736">
+    <gas name="CO" value="1"/>
+   </node>
+   
+   <node lat="39.870571" lon="-4.027190">
+    <gas name="CO" value="0"/>
+   </node>
+   
+  </path>
+  
+ </bus>
+</BUSES>

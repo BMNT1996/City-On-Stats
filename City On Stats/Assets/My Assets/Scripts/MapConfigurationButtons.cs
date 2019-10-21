@@ -83,4 +83,8 @@ public class MapConfigurationButtons : MonoBehaviour
         SceneManager.LoadScene("COS Virtual World");
 
     }
+
+	public void backClicked(){
+		SceneManager.LoadScene("COS Main Menu");
+	}
 }

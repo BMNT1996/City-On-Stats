@@ -7,18 +7,18 @@ public class BusAi : MonoBehaviour
 {
 
     //public Transform path;
-    public float maxSteerAngle = 45f;
-    public float turnSpeed = 5f;
+    private float maxSteerAngle = 45f;
+    private float turnSpeed = 5f;
     public WheelCollider wheelFL;
     public WheelCollider wheelFR;
     public WheelCollider wheelRL;
     public WheelCollider wheelRR;
     float maxMotorTorque = 3000f;
-    public float maxBrakeTorque = 150f;
-    public float currentSpeed;
+    private float maxBrakeTorque = 150f;
+    private float currentSpeed;
     float maxSpeed = (float)25 / 60;
-    public Vector3 centerOfMass;
-    public Material PlaneMaterial;
+    private Vector3 centerOfMass;
+    private Material PlaneMaterial;
 
     private string name;
     private List<Transform> nodes;
@@ -34,16 +34,21 @@ public class BusAi : MonoBehaviour
     String end;
 
     [Header("Sensors")]
-    public float sensorLength = 3f;
-    public Vector3 frontSensorPosition = new Vector3(0f, 1f, 4f);
-    public float frontSideSensorPosition = 0.5f;
-    public float frontSensorAngle = 30f;
+    private float sensorLength = 3f;
+    private Vector3 frontSensorPosition = new Vector3(-0.331f, 1f, 3.5f);
+    private float frontSideSensorPosition = 0.6f;
+    private float frontSensorAngle = 30f;
 
     public float Revs { get; internal set; }
     public float AccelInput { get; internal set; }
 
+    private GameObject Sphere;
+
     private void Start()
     {
+        Sphere = GameObject.CreatePrimitive(PrimitiveType.Sphere);
+        Sphere.transform.localScale = new Vector3(0.5f, 0.5f, 0.5f);
+        Sphere.name = "Banana";
         ignoreCOllisions();
         rotationEnd = Time.time;
         busMaterial = new Material(Shader.Find("Specular"));
@@ -113,15 +118,19 @@ public class BusAi : MonoBehaviour
         Vector3 sensorStartPos = transform.position;
         sensorStartPos += transform.forward * frontSensorPosition.z;
         sensorStartPos += transform.up * frontSensorPosition.y;
+        sensorStartPos += transform.right * frontSensorPosition.x;
         float avoidMultiplier = 0;
         avoiding = false;
         bool roadleft = false, roadright = false;
-
+        Vector3 f;
         //front right sensor
-        sensorStartPos += transform.right * (frontSideSensorPosition - 0.331f);
+        sensorStartPos += transform.right * frontSideSensorPosition;
+        f = sensorStartPos + transform.forward * 3; //Right
+        Debug.DrawLine(sensorStartPos, f, Color.black, 10, false);
+        f = sensorStartPos + Quaternion.AngleAxis(frontSensorAngle, transform.up) * transform.forward * 3;
+        Debug.DrawLine(sensorStartPos, f, Color.white, 10, false); //Right Angle
         if (Physics.Raycast(sensorStartPos, transform.forward, out hit, sensorLength))
         {
-            Debug.DrawLine(sensorStartPos, hit.point, Color.red, 2, false);
             avoiding = true;
             avoidMultiplier -= 1f;
         }
@@ -129,16 +138,18 @@ public class BusAi : MonoBehaviour
         //front right angle sensor
         else if (Physics.Raycast(sensorStartPos, Quaternion.AngleAxis(frontSensorAngle, transform.up) * transform.forward, out hit, sensorLength))
         {
-            Debug.DrawLine(sensorStartPos, hit.point, Color.red, 2, false);
             avoiding = true;
             avoidMultiplier -= 0.5f;
         }
 
         //front left sensor
         sensorStartPos -= transform.right * frontSideSensorPosition * 2;
+        f = sensorStartPos + transform.forward * 3;
+        Debug.DrawLine(sensorStartPos, f,Color.black,10,false);
+        f = sensorStartPos + Quaternion.AngleAxis(-frontSensorAngle, transform.up) * transform.forward * 3;
+        Debug.DrawLine(sensorStartPos, f,Color.white,10,false);
         if (Physics.Raycast(sensorStartPos, transform.forward, out hit, sensorLength))
         {
-            Debug.DrawLine(sensorStartPos, hit.point, Color.red, 2, false);
             avoiding = true;
             avoidMultiplier += 1f;
         }
@@ -146,31 +157,42 @@ public class BusAi : MonoBehaviour
         //front left angle sensor
         else if (Physics.Raycast(sensorStartPos, Quaternion.AngleAxis(-frontSensorAngle, transform.up) * transform.forward, out hit, sensorLength))
         {
-            Debug.DrawLine(sensorStartPos, hit.point, Color.red, 2, false);
             avoiding = true;
             avoidMultiplier += 0.5f;
         }
 
         // left and right sensor angled, trying to keep bus on road 
-        else
+        /*else
         {
-            Physics.Raycast(sensorStartPos, Quaternion.AngleAxis(frontSensorAngle, transform.right) * Quaternion.AngleAxis(-frontSensorAngle, transform.up) * transform.forward, out hit, sensorLength);
-            string nameleft = hit.transform.gameObject.name;
-            sensorStartPos += transform.right * frontSideSensorPosition * 2;
-            Physics.Raycast(sensorStartPos, Quaternion.AngleAxis(frontSensorAngle, transform.right) * Quaternion.AngleAxis(frontSensorAngle, transform.up) * transform.forward, out hit, sensorLength);
-            string nameright = hit.transform.gameObject.name;
+            if (Physics.Raycast(sensorStartPos, Quaternion.AngleAxis(frontSensorAngle, transform.right) * Quaternion.AngleAxis(-5, transform.up) * transform.forward, out hit, sensorLength + 2))
+            {
+                string nameleft = hit.transform.gameObject.name;
+                f = sensorStartPos + Quaternion.AngleAxis(frontSensorAngle, transform.right) * Quaternion.AngleAxis(-5, transform.up) * transform.forward * 5;
+                Debug.DrawLine(sensorStartPos, f, Color.green, 10, false);
+                sensorStartPos += transform.right * frontSideSensorPosition * 2;
+                if (Physics.Raycast(sensorStartPos, Quaternion.AngleAxis(frontSensorAngle, transform.right) * Quaternion.AngleAxis(frontSensorAngle, transform.up) * transform.forward, out hit, sensorLength + 2))
+                {
+                    string nameright = hit.transform.gameObject.name;
+                    f = sensorStartPos + Quaternion.AngleAxis(frontSensorAngle, transform.right) * Quaternion.AngleAxis(5, transform.up) * transform.forward * 5;
+                    Debug.DrawLine(sensorStartPos, f, Color.red, 10, false);
+                    if (nameleft.Contains("Road") && !nameright.Contains("Road"))
+                    {
+                        avoiding = true;
+                        avoidMultiplier -= 1f;
+                    }
+                    else if (nameright.Contains("Road") && !nameleft.Contains("Road"))
+                    {
+                        avoiding = true;
+                        avoidMultiplier += 1f;
+                    }
+                }
 
-            if (nameleft.Contains("Road") && !nameright.Contains("Road"))
-            {
-                avoiding = true;
-                avoidMultiplier -= 1f;
             }
-            else if (nameright.Contains("Road") && !nameleft.Contains("Road"))
-            {
-                avoiding = true;
-                avoidMultiplier += 1f;
-            }
-        }
+
+
+
+
+        }*/
 
         //front center sensor
         if (avoidMultiplier == 0)
@@ -274,6 +296,9 @@ public class BusAi : MonoBehaviour
                 {
                     if (Vector3.Distance(transform.position, nodes[currectNode].position) < 5f)
                     {
+                        gameObject.GetComponent<Rigidbody>().velocity = Vector3.zero;
+                        gameObject.GetComponent<Rigidbody>().angularVelocity = Vector3.zero;
+                        rotationEnd = Time.time + 3;
                         gameObject.transform.eulerAngles = transform.eulerAngles + (180f * Vector3.up);
                         reverse = !reverse;
                     }
@@ -284,7 +309,7 @@ public class BusAi : MonoBehaviour
 
     public string getReaderText(string gas)
     {
-        return gas + "\n" + nodes[currectNode].gameObject.GetComponent<NodePath>().getGasValue(gas);
+        return gas + "\n" + nodes[currectNode].gameObject.GetComponent<NodePath>().getGasValue(gas).ToString("F3");
     }
 
     public double getGasValue(string gas)

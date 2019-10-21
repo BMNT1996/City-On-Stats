@@ -26,7 +26,10 @@ public class StaticInfos : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
+        if (Input.GetKeyDown(KeyCode.JoystickButton0))
+        {
+            print("Hello");
+        }
     }
 
     public string getObj()

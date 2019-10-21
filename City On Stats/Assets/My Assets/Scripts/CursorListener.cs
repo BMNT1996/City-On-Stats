@@ -13,6 +13,7 @@ public class CursorListener : MonoBehaviour
     public GameObject visual;
     public GameObject panels;
     public GameObject busControl;
+    public GameObject Graph;
     public Window_Graph WG;
 
     // Start is called before the first frame update
@@ -142,6 +143,12 @@ public class CursorListener : MonoBehaviour
                                 }
                             }
                         }
+                    }
+
+                    else if (hit.transform.gameObject.name.Equals("GraphicEvolution"))
+                    {
+                        Graph.SetActive(true);
+                        Graph.GetComponent<WarningScript>().setTimer(5);
                     }
 
                     else

@@ -14,10 +14,16 @@ public class PanelController : MonoBehaviour
     public GameObject MapPanel;
     public GameObject BusPanel;
     public GameObject GasesPanel;
+    public GameObject HelpPanel;
+    public GameObject ChallengesPanel;
+    public GameObject TutorialPanel;
+    public GameObject HelpSelection;
+    public GameObject WarningPanel;
 
     public GameObject StreetHandler;
     public GameObject itemTemplate;
     public GameObject content;
+    public InteractiveTutorial Tutorial;
 
     public GameObject visual;
     public GameObject buses;
@@ -43,12 +49,16 @@ public class PanelController : MonoBehaviour
             map();
         }
 
-        if (Input.GetKeyDown("t") && !si.isOnAiBusMode())
+        if (Input.GetKeyDown("t") || Input.GetKeyDown(KeyCode.JoystickButton2))
         {
-            teleport();
+            if (!si.isOnAiBusMode())
+                teleport();
+            else
+                WarningPanel.SetActive(true);
+            WarningPanel.GetComponent<WarningScript>().setTimer(5);
         }
 
-        if (Input.GetKeyDown("b") && !si.isOnAiBusMode())
+        if ((Input.GetKeyDown("b") || Input.GetKeyDown(KeyCode.JoystickButton1)) && !si.isOnAiBusMode())
         {
             bus();
         }
@@ -58,10 +68,25 @@ public class PanelController : MonoBehaviour
             gases();
         }
 
-        if (Input.GetKeyDown(KeyCode.Escape))
+        if (Input.GetKeyDown(KeyCode.Escape) || Input.GetKeyDown(KeyCode.JoystickButton7))
         {
             escape();
         }
+
+        if (Input.GetKeyDown("r") && !si.isOnAiBusMode())
+        {
+            GameObject gm = GameObject.FindGameObjectWithTag("Player");
+            gm.transform.position = new Vector3(gm.transform.position.x, 5, gm.transform.position.z);
+            gm.GetComponent<Rigidbody>().velocity = Vector3.zero;
+            gm.GetComponent<Rigidbody>().angularVelocity = Vector3.zero;
+            gm.transform.eulerAngles = new Vector3(0, 0, 0);
+        }
+
+        if (Input.GetKeyDown(KeyCode.JoystickButton6))
+            helpSelection();
+
+        if (Input.GetKeyDown(KeyCode.JoystickButton5))
+            challenge();
     }
 
     public void gases()
@@ -142,6 +167,7 @@ public class PanelController : MonoBehaviour
 
     public void teleport()
     {
+        Tutorial.teleportUsed();
         if (!TeleportPanel.activeSelf)
         {
             closeAllPanels();
@@ -187,6 +213,7 @@ public class PanelController : MonoBehaviour
 
     public void bus()
     {
+        Tutorial.busesUsed();
         if (!BusPanel.activeSelf)
         {
             closeAllPanels();
@@ -228,6 +255,64 @@ public class PanelController : MonoBehaviour
             Cursor.lockState = CursorLockMode.None;
         }
     }
+
+	public void help(){
+		if(!HelpPanel.activeSelf){
+			closeAllPanels();
+            panelActive = true;
+            HelpPanel.SetActive(true);
+		}
+		else{
+			closeAllPanels();
+            Cursor.visible = true;
+            Cursor.lockState = CursorLockMode.None;
+		}
+	}
+
+    internal void tutorial()
+    {
+        if (!TutorialPanel.activeSelf)
+        {
+            closeAllPanels();
+            panelActive = true;
+            TutorialPanel.SetActive(true);
+        }
+        else
+        {
+            closeAllPanels();
+            Cursor.visible = true;
+            Cursor.lockState = CursorLockMode.None;
+        }
+    }
+
+    internal void helpSelection()
+    {
+        if (!HelpSelection.activeSelf)
+        {
+            closeAllPanels();
+            panelActive = true;
+            HelpSelection.SetActive(true);
+        }
+        else
+        {
+            closeAllPanels();
+            Cursor.visible = true;
+            Cursor.lockState = CursorLockMode.None;
+        }
+    }
+
+    public void challenge(){
+		if(!ChallengesPanel.activeSelf){
+			closeAllPanels();
+            panelActive = true;
+            ChallengesPanel.SetActive(true);
+		}
+		else{
+			closeAllPanels();
+            Cursor.visible = true;
+            Cursor.lockState = CursorLockMode.None;
+		}
+	}
 
     public void escape()
     {
@@ -299,5 +384,13 @@ public class PanelController : MonoBehaviour
             EscPanel.SetActive(false);
         if (GasesPanel.active)
             GasesPanel.SetActive(false);
+		if (HelpPanel.active)
+            HelpPanel.SetActive(false);
+		if (ChallengesPanel.active)
+            ChallengesPanel.SetActive(false);
+        if (HelpSelection.active)
+            HelpSelection.SetActive(false);
+        if (TutorialPanel.active)
+            TutorialPanel.SetActive(false);
     }
 }
